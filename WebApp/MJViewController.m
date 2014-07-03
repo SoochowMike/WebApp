@@ -55,31 +55,27 @@
     
     
     NSString *number = _phoneNOText.text;
-    NSString *parameter1=@"mobileCode";//参数1
-    NSString *parameter2=@"userID";//参数2
+    NSString *parameter1=@"job";//参数1
+//    NSString *parameter2=@"userID";//参数2
     
     
     // 设置我们之后解析XML时用的关键字，与响应报文中Body标签之间的getMobileCodeInfoResult标签对应
-    matchingElement = @"getMobileCodeInfoResult";
+    matchingElement = @"JobInfoResult";
     // 创建SOAP消息，内容格式就是网站上提示的请求报文的实体主体部分
     NSString *soapMsg = [NSString stringWithFormat:
-                         @"<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-                         "<soap12:Envelope "
-                         "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
-                         "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "
-                         "xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
+                         @"<?xml version='1.0' encoding='utf-8'?>"
+                         "<soap12:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap12='http://www.w3.org/2003/05/soap-envelope'>"
                          "<soap12:Body>"
-                         "<getMobileCodeInfo xmlns=\"http://WebXml.com.cn/\">"
+                         "<JobInfo xmlns='http://MobileServiceTest'>"
                          "<%@>%@</%@>"
-                         "<%@>%@</%@>"
-                         "</getMobileCodeInfo>"
+                         "</JobInfo>"
                          "</soap12:Body>"
-                         "</soap12:Envelope>",parameter1,number,parameter1, parameter2, @"",parameter2];
+                         "</soap12:Envelope>",parameter1,number,parameter1];
     
     // 将这个XML字符串打印出来
     NSLog(@"%@", soapMsg);
     // 创建URL，内容是前面的请求报文报文中第二行主机地址加上第一行URL字段
-    NSURL *url = [NSURL URLWithString: @"http://webservice.webxml.com.cn/WebServices/MobileCodeWS.asmx"];
+    NSURL *url = [NSURL URLWithString: @"http://3.41.199.73:8086/mobileservicetest.asmx"];
     // 根据上面的URL创建一个请求
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     NSString *msgLength = [NSString stringWithFormat:@"%d", [soapMsg length]];
