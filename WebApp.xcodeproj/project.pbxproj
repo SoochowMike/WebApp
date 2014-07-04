@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23F9475B19665A0400E812CC /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F9475A19665A0400E812CC /* ExternalAccessory.framework */; };
+		23F9476019665A2D00E812CC /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F9475D19665A2D00E812CC /* libCaptuvoSDK.a */; };
+		23F9476119665A2D00E812CC /* libCaptuvoSDK_Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F9475E19665A2D00E812CC /* libCaptuvoSDK_Debug.a */; };
+		23F9476219665A2D00E812CC /* libCaptuvoSDK_Emulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F9475F19665A2D00E812CC /* libCaptuvoSDK_Emulator.a */; };
 		2792BC39196466CB00B1C334 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2792BC38196466CB00B1C334 /* Foundation.framework */; };
 		2792BC3B196466CB00B1C334 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2792BC3A196466CB00B1C334 /* CoreGraphics.framework */; };
 		2792BC3D196466CB00B1C334 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2792BC3C196466CB00B1C334 /* UIKit.framework */; };
@@ -34,6 +38,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23F9475A19665A0400E812CC /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		23F9475D19665A2D00E812CC /* libCaptuvoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK.a; sourceTree = "<group>"; };
+		23F9475E19665A2D00E812CC /* libCaptuvoSDK_Debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK_Debug.a; sourceTree = "<group>"; };
+		23F9475F19665A2D00E812CC /* libCaptuvoSDK_Emulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK_Emulator.a; sourceTree = "<group>"; };
+		23F9476319665A4F00E812CC /* Captuvo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Captuvo.h; sourceTree = "<group>"; };
 		2792BC35196466CB00B1C334 /* WebApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2792BC38196466CB00B1C334 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2792BC3A196466CB00B1C334 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -60,9 +69,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23F9475B19665A0400E812CC /* ExternalAccessory.framework in Frameworks */,
 				2792BC3B196466CB00B1C334 /* CoreGraphics.framework in Frameworks */,
 				2792BC3D196466CB00B1C334 /* UIKit.framework in Frameworks */,
+				23F9476119665A2D00E812CC /* libCaptuvoSDK_Debug.a in Frameworks */,
 				2792BC39196466CB00B1C334 /* Foundation.framework in Frameworks */,
+				23F9476019665A2D00E812CC /* libCaptuvoSDK.a in Frameworks */,
+				23F9476219665A2D00E812CC /* libCaptuvoSDK_Emulator.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,9 +92,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		23F9475C19665A2D00E812CC /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				23F9475D19665A2D00E812CC /* libCaptuvoSDK.a */,
+				23F9475E19665A2D00E812CC /* libCaptuvoSDK_Debug.a */,
+				23F9475F19665A2D00E812CC /* libCaptuvoSDK_Emulator.a */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
 		2792BC2C196466CB00B1C334 = {
 			isa = PBXGroup;
 			children = (
+				23F9476319665A4F00E812CC /* Captuvo.h */,
+				23F9475C19665A2D00E812CC /* Lib */,
 				2792BC3E196466CB00B1C334 /* WebApp */,
 				2792BC5D196466CB00B1C334 /* WebAppTests */,
 				2792BC37196466CB00B1C334 /* Frameworks */,
@@ -101,6 +126,7 @@
 		2792BC37196466CB00B1C334 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23F9475A19665A0400E812CC /* ExternalAccessory.framework */,
 				2792BC38196466CB00B1C334 /* Foundation.framework */,
 				2792BC3A196466CB00B1C334 /* CoreGraphics.framework */,
 				2792BC3C196466CB00B1C334 /* UIKit.framework */,
@@ -380,6 +406,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WebApp/WebApp-Prefix.pch";
 				INFOPLIST_FILE = "WebApp/WebApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -393,6 +423,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WebApp/WebApp-Prefix.pch";
 				INFOPLIST_FILE = "WebApp/WebApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -457,6 +491,7 @@
 				2792BC69196466CB00B1C334 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2792BC6A196466CB00B1C334 /* Build configuration list for PBXNativeTarget "WebAppTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +500,7 @@
 				2792BC6C196466CB00B1C334 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,6 +8,7 @@
 
 #import "MJViewController.h"
 
+
 @interface MJViewController ()
 
 @end
@@ -20,7 +21,6 @@
 @synthesize elementFound;
 @synthesize matchingElement;
 @synthesize conn;
-
 
 
 
@@ -51,16 +51,48 @@
 }
 
 
-- (IBAction)phoneQuery:(id)sender {
+- (IBAction)scanningBtn:(id)sender {
     
+   ProtocolConnectionStatus state=  [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    if(state!= ProtocolConnectionStatusConnected)
+        NSLog(@"Connection fail");
+
+        
+
+    
+}
+
+- (IBAction)scanningBtnLoss:(id)sender {
+    
+ [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+    
+    
+}
+
+-(void) decoderDataReceived:(NSString *)data
+{
+    
+
+    self.phoneNOText.text = data;
+    
+    
+}
+
+
+
+
+
+- (IBAction)phoneQuery:(id)sender {
     
     NSString *number = _phoneNOText.text;
     NSString *parameter1=@"job";//参数1
 //    NSString *parameter2=@"userID";//参数2
     
     
-    // 设置我们之后解析XML时用的关键字，与响应报文中Body标签之间的getMobileCodeInfoResult标签对应
+    // 设置我们之后解析XML时用的关键字,用于查找节点
+    
     matchingElement = @"JobInfoResult";
+    
     // 创建SOAP消息，内容格式就是网站上提示的请求报文的实体主体部分
     NSString *soapMsg = [NSString stringWithFormat:
                          @"<?xml version='1.0' encoding='utf-8'?>"

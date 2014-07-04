@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Captuvo.h"
 
-@interface MJViewController : UIViewController<NSXMLParserDelegate,  NSURLConnectionDelegate>
+@interface MJViewController : UIViewController<NSXMLParserDelegate,  NSURLConnectionDelegate ,CaptuvoEventsProtocol>
 
 
 
@@ -27,7 +28,10 @@
 
 
 
-
 - (IBAction)phoneQuery:(id)sender;
+- (IBAction)scanningBtn:(id)sender;
+- (IBAction)scanningBtnLoss:(id)sender;
 - (IBAction)textFiledReturnEditing:(id)sender;
+
+
 @end
