@@ -26,8 +26,6 @@
 
 
 
-
-
 - (IBAction)phoneQuery:(id)sender;
 - (IBAction)scanningBtn:(id)sender;
 - (IBAction)scanningBtnLoss:(id)sender;

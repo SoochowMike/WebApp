@@ -37,20 +37,20 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+// 按下键盘return按钮隐藏键盘
 - (IBAction)textFiledReturnEditing:(id)sender
 {
     [sender resignFirstResponder];
 }
 
-
+//触摸屏幕其他位置隐藏键盘
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.phoneNOText resignFirstResponder];
 
 }
 
-
+// 按下开始扫描
 - (IBAction)scanningBtn:(id)sender {
     
    ProtocolConnectionStatus state=  [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
@@ -62,6 +62,7 @@
     
 }
 
+//松开按钮结束扫描
 - (IBAction)scanningBtnLoss:(id)sender {
     
  [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
@@ -69,6 +70,7 @@
     
 }
 
+//扫描获得数据
 -(void) decoderDataReceived:(NSString *)data
 {
     
@@ -79,18 +81,19 @@
 }
 
 
-
-
+//按下submit按钮链接服务器查询相关信息
 
 - (IBAction)phoneQuery:(id)sender {
     
     NSString *number = _phoneNOText.text;
-    NSString *parameter1=@"job";//参数1
-//    NSString *parameter2=@"userID";//参数2
     
+    //设置WebMethod
+    NSString *webMethod=@"JobInfo";
+    //参数
+    NSString *parameter1=@"job";
+
     
     // 设置我们之后解析XML时用的关键字,用于查找节点
-    
     matchingElement = @"JobInfoResult";
     
     // 创建SOAP消息，内容格式就是网站上提示的请求报文的实体主体部分
@@ -98,11 +101,11 @@
                          @"<?xml version='1.0' encoding='utf-8'?>"
                          "<soap12:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap12='http://www.w3.org/2003/05/soap-envelope'>"
                          "<soap12:Body>"
-                         "<JobInfo xmlns='http://MobileServiceTest'>"
+                         "<%@ xmlns='http://MobileServiceTest'>"
                          "<%@>%@</%@>"
-                         "</JobInfo>"
+                         "</%@>"
                          "</soap12:Body>"
-                         "</soap12:Envelope>",parameter1,number,parameter1];
+                         "</soap12:Envelope>",webMethod,parameter1,number,parameter1,webMethod];
     
     // 将这个XML字符串打印出来
     NSLog(@"%@", soapMsg);
@@ -186,16 +189,7 @@
     if ([elementName isEqualToString:matchingElement]) {
         
         _messageShow.text=soapResults;
-        
-        
-        
-        
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"手机号码信息"
-//                                                        message:[NSString stringWithFormat:@"%@", soapResults]
-//                                                       delegate:self
-//                                              cancelButtonTitle:@"确定"
-//                                              otherButtonTitles:nil];
-//        [alert show];
+
         elementFound = FALSE;
         // 强制放弃解析
         [xmlParser abortParsing];
