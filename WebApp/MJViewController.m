@@ -21,15 +21,40 @@
 @synthesize elementFound;
 @synthesize matchingElement;
 @synthesize conn;
-
+@synthesize phoneNOText;
+@synthesize messageShow;
 
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 	// Do any additional setup after loading the view, typically from a nib.
+    
+
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+
+
+    
 }
+
+
+
+
+
+
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+
+    }
+    
+    return self;
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -37,25 +62,102 @@
     // Dispose of any resources that can be recreated.
 }
 
-// 按下键盘return按钮隐藏键盘
-- (IBAction)textFiledReturnEditing:(id)sender
-{
-    [sender resignFirstResponder];
+
+
+- (IBAction)startDecoder:(id)sender {
+
+    ProtocolConnectionStatus state=  [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    
+    NSString *mess=nil;
+    
+    
+    
+    switch (state) {
+        case ProtocolConnectionStatusAlreadyConnected:
+            mess=@"already connected";
+            break;
+            case ProtocolConnectionStatusUnableToConnect:
+            mess=@"error connecting";
+            break;
+            case ProtocolConnectionStatusConnected:
+            mess=@"connecting";
+            break;
+            case ProtocolConnectionStatusUnableToConnectIncompatiableSledFirmware:
+            mess=@"incompatible firmware";
+            break;
+            case ProtocolConnectionStatusBatteryDepleted:
+            mess=@"battery depleted";
+            break;
+            
+        default:
+            break;
+    }
+    {UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil
+                                                    message:mess
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+        [alert show];}
 }
 
-//触摸屏幕其他位置隐藏键盘
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [self.phoneNOText resignFirstResponder];
-
+- (IBAction)stopDecoder:(id)sender {
+    [[Captuvo sharedCaptuvoDevice]stopDecoderHardware];
 }
+
+
+-(void)captuvoDisconnected{
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil
+                                                   message:@"Captuvo Disconnected"
+                                                  delegate:nil
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles:nil];
+    [alert show];
+}
+
+
+- (void)decoderReady
+{
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil
+                                                   message:@"decoder ready"
+                                                  delegate:nil
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles:nil];
+    [alert show];
+    
+    
+}
+-(void)captuvoConnected{
+    
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil
+                                                   message:@"Captuvo Connected"
+                                                  delegate:self
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles:nil];
+    [alert show];
+}
+
+
+
+
+
 
 // 按下开始扫描
 - (IBAction)scanningBtn:(id)sender {
     
-   ProtocolConnectionStatus state=  [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
-    if(state!= ProtocolConnectionStatusConnected)
-        NSLog(@"Connection fail");
+
+
+    [[Captuvo sharedCaptuvoDevice] startDecoderScanning];
+
+
+    
+    
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil
+                                                   message:@"scan 被调用"
+                                                  delegate:self
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles:nil];
+    [alert show];
+
 
         
 
@@ -65,7 +167,9 @@
 //松开按钮结束扫描
 - (IBAction)scanningBtnLoss:(id)sender {
     
- [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderScanning];
+    
+
     
     
 }
@@ -80,12 +184,29 @@
     
 }
 
+- (void)decoderRawDataReceived:(NSData *)data
+{
+
+    self.phoneNOText.text = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] ;
+}
+// 按下键盘return按钮隐藏键盘
+- (IBAction)textFiledReturnEditing:(id)sender
+{
+    [sender resignFirstResponder];
+}
+
+//触摸屏幕其他位置隐藏键盘
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.phoneNOText resignFirstResponder];
+    
+}
 
 //按下submit按钮链接服务器查询相关信息
 
 - (IBAction)phoneQuery:(id)sender {
     
-    NSString *number = _phoneNOText.text;
+    NSString *number = phoneNOText.text;
     
     //设置WebMethod
     NSString *webMethod=@"JobInfo";
@@ -113,7 +234,7 @@
     NSURL *url = [NSURL URLWithString: @"http://3.41.199.73:8086/mobileservicetest.asmx"];
     // 根据上面的URL创建一个请求
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
-    NSString *msgLength = [NSString stringWithFormat:@"%d", [soapMsg length]];
+    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[soapMsg length]];
     // 添加请求的详细信息，与请求报文前半部分的各字段对应
     [req addValue:@"application/soap+xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [req addValue:msgLength forHTTPHeaderField:@"Content-Length"];
@@ -188,7 +309,7 @@
 -(void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
     if ([elementName isEqualToString:matchingElement]) {
         
-        _messageShow.text=soapResults;
+        messageShow.text=soapResults;
 
         elementFound = FALSE;
         // 强制放弃解析

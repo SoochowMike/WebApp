@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Captuvo.h"
 
-@interface MJAppDelegate : UIResponder <UIApplicationDelegate>
+
+@class MJViewController;
+
+@interface MJAppDelegate : UIResponder <UIApplicationDelegate,CaptuvoEventsProtocol>
 
 @property (strong, nonatomic) UIWindow *window;
 

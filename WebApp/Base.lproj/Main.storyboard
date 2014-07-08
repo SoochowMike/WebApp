@@ -49,8 +49,37 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="scanningBtn:" destination="vXZ-lx-hvc" eventType="touchDown" id="vfH-rQ-pd6"/>
-                                    <action selector="scanningBtnLoss:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="6e0-qB-j0F"/>
+                                    <action selector="scanningBtn:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="bsZ-zU-DFu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lip-Qc-d4h">
+                                <rect key="frame" x="137" y="387" width="33" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Stop">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="scanningBtnLoss:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Add-1U-8JO"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0t1-Gb-tRg">
+                                <rect key="frame" x="59" y="452" width="99" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="start hardware">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="startDecoder:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="yay-9a-jMe"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OdV-PQ-uXP">
+                                <rect key="frame" x="210" y="452" width="99" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="stop hardware">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="stopDecoder:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="viI-XO-rwL"/>
                                 </connections>
                             </button>
                         </subviews>

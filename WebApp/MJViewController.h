@@ -30,6 +30,8 @@
 - (IBAction)scanningBtn:(id)sender;
 - (IBAction)scanningBtnLoss:(id)sender;
 - (IBAction)textFiledReturnEditing:(id)sender;
+- (IBAction)startDecoder:(id)sender;
+- (IBAction)stopDecoder:(id)sender;
 
 
 @end
