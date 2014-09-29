@@ -250,8 +250,6 @@
 }
 
 
-#pragma mark -
-#pragma mark URL Connection Data Delegate Methods
 
 // 刚开始接受响应时调用
 -(void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *) response{
@@ -285,8 +283,7 @@
 }
 
 
-#pragma mark -
-#pragma mark XML Parser Delegate Methods
+
 
 // 开始解析一个元素名
 -(void) parser:(NSXMLParser *) parser didStartElement:(NSString *) elementName namespaceURI:(NSString *) namespaceURI qualifiedName:(NSString *) qName attributes:(NSDictionary *) attributeDict {
